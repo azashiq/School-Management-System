@@ -1,0 +1,48 @@
+@model IEnumerable<Subject>
+
+@{
+    ViewData["Title"] = "Subjects";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-journal-bookmark-fill text-primary"></i> Subjects</h2>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add New Subject</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.SubjectCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>Teacher</th>
+                        <th>Classroom</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubjectCode</td>
+                        <td>@item.Name</td>
+                        <td>@(item.Teacher?.FullName ?? "-")</td>
+                        <td>@(item.ClassRoom?.DisplayName ?? "-")</td>
+                        <td class="text-end action-btn-group">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="5" class="text-center text-muted py-4">No subjects found.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

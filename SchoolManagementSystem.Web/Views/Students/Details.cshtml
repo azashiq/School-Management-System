@@ -1,0 +1,110 @@
+@model Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-person-badge text-primary"></i> Student Details</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <div class="text-center mb-3">
+                    <imag src="@Model.ImagePath" style="width:150px;height:150px;object-fit:cover;border-radius:8px;" />
+                </div>
+            }
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.RegistrationNumber)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.RegistrationNumber)</dd>
+
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+            <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd MMM yyyy")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Gender)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Gender)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.PhoneNumber)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Address)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+
+            <dt class="col-sm-3">Classroom</dt>
+            <dd class="col-sm-9">@(Model.ClassRoom?.DisplayName ?? "-")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white fw-semibold"><i class="bi bi-calendar-check"></i> Recent Attendance</div>
+    <div class="card-body">
+        @if (Model.Attendances.Any())
+        {
+            <table class="table table-sm mb-0">
+                <thead><tr><th>Date</th><th>Status</th><th>Remarks</th></tr></thead>
+                <tbody>
+                @foreach (var attendance in Model.Attendances.OrderByDescending(a => a.Date).Take(10))
+                {
+                    <tr>
+                        <td>@attendance.Date.ToString("dd MMM yyyy")</td>
+                        <td>
+                            @if (attendance.IsPresent)
+                            {
+                                <span class="badge badge-present">Present</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-absent">Absent</span>
+                            }
+                        </td>
+                        <td>@attendance.Remarks</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted mb-0">No attendance records yet.</p>
+        }
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white fw-semibold"><i class="bi bi-award"></i> Grades</div>
+    <div class="card-body">
+        @if (Model.Grades.Any())
+        {
+            <table class="table table-sm mb-0">
+                <thead><tr><th>Subject</th><th>Exam Type</th><th>Score</th><th>Exam Date</th></tr></thead>
+                <tbody>
+                @foreach (var grade in Model.Grades.OrderByDescending(g => g.ExamDate))
+                {
+                    <tr>
+                        <td>@(grade.Subject?.Name ?? "-")</td>
+                        <td>@grade.ExamType</td>
+                        <td>@grade.Score</td>
+                        <td>@grade.ExamDate.ToString("dd MMM yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted mb-0">No grades recorded yet.</p>
+        }
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</a>

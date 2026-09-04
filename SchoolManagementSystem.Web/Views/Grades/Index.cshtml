@@ -1,0 +1,50 @@
+@model IEnumerable<Grade>
+
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-award-fill text-primary"></i> Grades</h2>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Record Grade</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>@Html.DisplayNameFor(model => model.ExamType)</th>
+                        <th>@Html.DisplayNameFor(model => model.Score)</th>
+                        <th>@Html.DisplayNameFor(model => model.ExamDate)</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(item.Student?.FullName ?? "-")</td>
+                        <td>@(item.Subject?.Name ?? "-")</td>
+                        <td>@item.ExamType</td>
+                        <td>@item.Score</td>
+                        <td>@item.ExamDate.ToString("dd MMM yyyy")</td>
+                        <td class="text-end action-btn-group">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-center text-muted py-4">No grades found.</td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

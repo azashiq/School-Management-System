@@ -1,0 +1,48 @@
+@model Teacher
+
+@{
+    ViewData["Title"] = "Teacher Details";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-person-badge text-primary"></i> Teacher Details</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.EmployeeId)</dt>
+            <dd class="col-sm-9">@Model.EmployeeId</dd>
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Qualification)</dt>
+            <dd class="col-sm-9">@Model.Qualification</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Phone)</dt>
+            <dd class="col-sm-9">@Model.Phone</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white fw-semibold"><i class="bi bi-journal-bookmark"></i> Subjects Taught</div>
+    <div class="card-body">
+        @if (Model.Subjects.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var subject in Model.Subjects)
+                {
+                    <li class="list-group-item">@subject.Name (@subject.SubjectCode)</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted mb-0">No subjects assigned yet.</p>
+        }
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</a>

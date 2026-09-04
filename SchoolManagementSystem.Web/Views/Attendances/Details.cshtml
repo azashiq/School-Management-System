@@ -1,0 +1,36 @@
+@model Attendance
+
+@{
+    ViewData["Title"] = "Attendance Details";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-calendar-check text-primary"></i> Attendance Details</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Student</dt>
+            <dd class="col-sm-9">@(Model.Student?.FullName ?? "-")</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Date)</dt>
+            <dd class="col-sm-9">@Model.Date.ToString("dd MMM yyyy")</dd>
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsPresent)
+                {
+                    <span class="badge badge-present">Present</span>
+                }
+                else
+                {
+                    <span class="badge badge-absent">Absent</span>
+                }
+            </dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Remarks)</dt>
+            <dd class="col-sm-9">@Model.Remarks</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</a>

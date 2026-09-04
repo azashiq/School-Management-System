@@ -1,0 +1,52 @@
+@model Subject
+
+@{
+    ViewData["Title"] = "Create Subject";
+}
+
+<div class="page-heading">
+    <h2 class="mb-0"><i class="bi bi-journal-plus text-primary"></i> Add New Subject</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="SubjectCode" class="form-label"></label>
+                    <input asp-for="SubjectCode" class="form-control" placeholder="e.g. SCI-101" />
+                    <span asp-validation-for="SubjectCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TeacherId" class="form-label">Teacher</label>
+                    <select asp-for="TeacherId" class="form-select" asp-items="ViewBag.TeacherId">
+                        <option value="">-- Select Teacher --</option>
+                    </select>
+                    <span asp-validation-for="TeacherId" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ClassRoomId" class="form-label">Classroom</label>
+                    <select asp-for="ClassRoomId" class="form-select" asp-items="ViewBag.ClassRoomId">
+                        <option value="">-- Select Classroom --</option>
+                    </select>
+                    <span asp-validation-for="ClassRoomId" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Save Subject</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
