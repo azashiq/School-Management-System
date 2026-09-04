@@ -84,6 +84,7 @@ namespace SchoolManagementSystem.Web.Controllers
                     student.ImagePath = await SaveImageAsync(ImageFile);
                 }
 
+
                 await _studentRepository.AddAsync(student);
                 await _studentRepository.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Student created successfully.";
